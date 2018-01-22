@@ -1,0 +1,28 @@
+language: c
+sudo: false
+before_install:
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_1.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :1 -ac -screen 0 1280x1024x16"
+  - sleep 3
+  - export DISPLAY=:1.0
+  - wget http://downloads.arduino.cc/arduino-1.6.9-linux64.tar.xz
+  - tar xf arduino-1.6.9-linux64.tar.xz
+  - mv arduino-1.6.9 $HOME/arduino_ide
+install:
+  - ln -s $PWD $HOME/arduino_ide/libraries/CAN_Library
+  - export PATH="$HOME/arduino_ide:$PATH"
+  - arduino --install-boards "arduino:sam"
+script:
+  - arduino --verify --board arduino:avr:uno $PWD/examples/ExtendedPingPong/ExtendedPingPong.ino
+  - arduino --verify --board arduino:avr:uno $PWD/examples/ReceiveAnyMessages/ReceiveAnyMessages.ino
+  - arduino --verify --board arduino:avr:uno $PWD/examples/ReceiveCANMessages/ReceiveCANMessages.ino
+  - arduino --verify --board arduino:avr:uno $PWD/examples/SendAnyMessages/SendAnyMessages.ino
+  - arduino --verify --board arduino:avr:uno $PWD/examples/SendCANMessages/SendCANMessages.ino
+  - arduino --verify --board arduino:sam:arduino_due_x $PWD/examples/ExtendedPingPong/ExtendedPingPong.ino
+  - arduino --verify --board arduino:sam:arduino_due_x $PWD/examples/ReceiveAnyMessages/ReceiveAnyMessages.ino
+  - arduino --verify --board arduino:sam:arduino_due_x $PWD/examples/ReceiveCANMessages/ReceiveCANMessages.ino
+  - arduino --verify --board arduino:sam:arduino_due_x $PWD/examples/SendAnyMessages/SendAnyMessages.ino
+  - arduino --verify --board arduino:sam:arduino_due_x $PWD/examples/SendCANMessages/SendCANMessages.ino
+notifications:
+  email:
+    on_success: change
+    on_failure: change

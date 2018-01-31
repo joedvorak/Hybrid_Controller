@@ -1,8 +1,8 @@
 /* 
  *        ------ CAN Bus Basic Example --------
- * 
+ *
  *  This sketch shows how to send data through CAN Bus standard.
- *  
+ *
  *  Copyright (C) 2014 Libelium Comunicaciones Distribuidas S.L.
  *  http://www.libelium.com
  *
@@ -58,23 +58,23 @@ void setup() {
 
 
 void loop() {
-  
+
   //****************************************
   // 1. Receive data
   //****************************************
-  
+
   if (myCAN.messageAvailable() == 1) {
     // Read the last message received.
     myCAN.getMessage(&myCAN.messageRx);
     // Print in the serial monitor the received message
     myCAN.printMessage(&myCAN.messageRx);
   }
-  
+
 
   //****************************************
   // 2. Send data
   //****************************************
-  
+
   // Insert the ID in the data structure
   myCAN.messageTx.id = OWNID;
   // These fields include the data to send
@@ -90,9 +90,7 @@ void loop() {
   // The length of the data structure
   myCAN.messageTx.header.length = 8;
   // Send data
-  myCAN.sendMessage(&myCAN.messageTx);  
+  myCAN.sendMessage(&myCAN.messageTx);
   // A time delay
   delay(1000);
 }
-
-

@@ -7,6 +7,7 @@
 void setup()
 {
   Serial.begin(115200);
+  Serial.println("Entering Setup");
   startCAN();
   engineRunStateOn = LOW; // initialize engine state to off
   engineHighSpeedState = LOW; // initialize engine speed to 1800 rpm

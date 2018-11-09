@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/Users/josephdvorak/Documents/Arduino/libraries",
+                "/Users/josephdvorak/Documents/Arduino/hardware/espressif/esp32/cores/esp32",
+                "/Users/josephdvorak/Documents/Arduino/hardware/espressif/esp32/libraries"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}

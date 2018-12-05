@@ -12,13 +12,16 @@ void setup()
   engineHighSpeedState = LOW; // initialize engine speed to 1800 rpm
   fanState = 0;
   pinMode(keySwitchPin, OUTPUT);
-  pinMode(hiSpeedSwitchPin, OUTPUT);
+  //pinMode(hiSpeedSwitchPin, OUTPUT);
   pinMode(fanContPin, OUTPUT);
+  pinMode(resetZAPIPin, OUTPUT);
   digitalWrite(keySwitchPin, engineRunStateOn);
-  digitalWrite(hiSpeedSwitchPin, engineHighSpeedState);
+  //digitalWrite(hiSpeedSwitchPin, engineHighSpeedState);
   digitalWrite(fanContPin, fanState);
   digitalWrite(resetZAPIPin, LOW);
+  Serial.println("Pins Setup, Resetting ZAPI");
   resetZAPI();
+  Serial.println("Setting Idle Mode");
   set_mode_idle();
   Serial.println("Exiting Setup");
 }
@@ -128,11 +131,14 @@ bool startCAN()
 //resetZAPI is the only function that contains delays!
 void resetZAPI()
 {
+  Serial.println("Resetting");
   digitalWrite(resetZAPIPin, HIGH);
-  delay(500);
+  delay(1000);
   digitalWrite(resetZAPIPin, LOW);
-  delay(500);
-  byte sndStat1 = CAN1.sendMsgBuf(0x00, 0, 8, messageCANOpenStart);
+  Serial.println("Reset Done. Sending CAN Start");
+  delay(1000);
+  byte sndStat1 = CAN1.sendMsgBuf(0x00, 0, 8, messageCANOpenStart); //No Delays allowed after this.
+  Serial.println("CAN Started");
 }
 
 void startCharingProcess()
@@ -152,7 +158,7 @@ void startCharingProcess()
 
 void charge()
 {
-  if (CONSTANT_CHARGE_A != 0)
+  if (CONSTANT_CHARGE_A == 0)
   {
     //Adjust charging current to maintain charge level.
   }
@@ -259,7 +265,8 @@ void set_mode_open_contact()
 
 void set_mode_fan_cool_down()
 {
-  digitalWrite(fanContPin, HIGH);
+  fanState = 1;                       //set fan variable to on
+  digitalWrite(fanContPin, fanState); // turn on fans
   //Fan cool down is the same as idle but the fans are running to cool the module after charging. Can be switched to another state.
   module_State = MOD_FAN_COOL_DOWN;
   stateCountDown = FAN_COOL_DOWN_WAIT / ZAPI_MESSAGE_PERIOD;

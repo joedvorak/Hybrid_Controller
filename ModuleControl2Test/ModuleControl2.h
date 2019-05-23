@@ -12,7 +12,7 @@ const long CRANK_SPEED = 1760;
 //Variables - Constant
 //Battery Specs
 //float bulkChargeCellVoltLimit = 2.25; //Set to 2.25V to be just below gassing voltage at 50 degC.
-const float bulkChargeCellVoltLimit = 2.4;                        //Generator can spike to 82 easily on startup.
+const float bulkChargeCellVoltLimit = 2.3;//2.4;                        //Generator can spike to 82 easily on startup.
 const int numOfCells = 36;                                        // number of cells in the battery pack
 const float maxbattLargeV = bulkChargeCellVoltLimit * numOfCells; // bulk charge limit per cell, 36 cells
 const float minbattLargeV = 2.00 * numOfCells;                    // 2V per cell, 36 cells
